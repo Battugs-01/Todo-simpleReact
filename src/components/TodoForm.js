@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function TodoForm(props) {
   const { todo, saveTodo } = props;
   const [value, setValue] = useState(todo?.text || "");
-
+  const inputRef = useRef(null);
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -17,10 +17,15 @@ function TodoForm(props) {
     }
   };
 
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   return (
     <form className="TodoForm" onSubmit={onSubmit}>
       <input
         type="text"
+        ref={inputRef}
         className="todo-input"
         value={value}
         onChange={(event) => setValue(event.target.value)}
